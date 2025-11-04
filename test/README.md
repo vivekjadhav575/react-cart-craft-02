@@ -1,6 +1,6 @@
 # E-Commerce Admin Test Suite
 
-Automated Selenium test suite for the E-Commerce Admin application with 20 comprehensive test cases.
+Automated Selenium test suite for the E-Commerce Admin application with 25 comprehensive test cases.
 
 ## Prerequisites
 
@@ -40,6 +40,11 @@ pip install selenium
 18. **Update product quantity** - Specific field update
 19. **Session persistence** - Page refresh test
 20. **Complete workflow** - End-to-end scenario
+21. **Add product with special characters** - Test special character handling
+22. **Update all product fields** - Test comprehensive field updates
+23. **Negative values validation** - Test validation for negative inputs
+24. **Boundary values** - Test maximum and minimum value limits
+25. **Rapid operations stress test** - Test application under rapid tab switching
 
 ## Running the Tests
 

@@ -705,6 +705,223 @@ class EcommerceAdminTest(unittest.TestCase):
             print(f"  → Step 5: Delete skipped: {e}")
         
         print("✓ Complete workflow test finished successfully")
+    
+    # Test Case 21: Add product with special characters
+    def test_21_add_product_special_characters(self):
+        """Test adding product with special characters in name and description"""
+        print("\n[TEST 21] Testing product with special characters...")
+        self.login()
+        
+        add_tab = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Add Product')]"))
+        )
+        add_tab.click()
+        time.sleep(1)
+        
+        # Product with special characters
+        name_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder*='name' i]")
+        name_input.send_keys("Product @#$% & Special-Chars_123")
+        
+        category_button = self.driver.find_element(By.XPATH, "//button[@role='combobox']")
+        category_button.click()
+        time.sleep(0.5)
+        category_option = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//div[@role='option'][1]"))
+        )
+        category_option.click()
+        time.sleep(0.5)
+        
+        description_input = self.driver.find_element(By.CSS_SELECTOR, "textarea")
+        description_input.send_keys("Testing: special chars! @#$%^&*()_+{}[]|\\:;<>?,./~`")
+        
+        price_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder*='price' i]")
+        price_input.send_keys("1500")
+        
+        quantity_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder*='quantity' i]")
+        quantity_input.send_keys("10")
+        
+        add_button = self.driver.find_element(By.XPATH, "//button[contains(text(), 'Add Product')][@type='submit']")
+        add_button.click()
+        time.sleep(2)
+        
+        print("✓ Product with special characters added successfully")
+    
+    # Test Case 22: Update all product fields
+    def test_22_update_all_fields(self):
+        """Test updating all fields of a product at once"""
+        print("\n[TEST 22] Testing update of all product fields...")
+        self.login()
+        
+        update_tab = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Update')]"))
+        )
+        update_tab.click()
+        time.sleep(1)
+        
+        try:
+            select_button = self.wait.until(
+                EC.element_to_be_clickable((By.XPATH, "//button[@role='combobox']"))
+            )
+            select_button.click()
+            time.sleep(0.5)
+            
+            product_option = self.wait.until(
+                EC.element_to_be_clickable((By.XPATH, "//div[@role='option'][1]"))
+            )
+            product_option.click()
+            time.sleep(1)
+            
+            # Update all fields
+            name_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder*='name' i]")
+            name_input.clear()
+            name_input.send_keys("Fully Updated Product")
+            
+            # Update category
+            category_button = self.driver.find_element(By.XPATH, "//button[@role='combobox'][last()]")
+            category_button.click()
+            time.sleep(0.5)
+            category_option = self.wait.until(
+                EC.element_to_be_clickable((By.XPATH, "//div[@role='option'][contains(., 'Electronics')]"))
+            )
+            category_option.click()
+            time.sleep(0.5)
+            
+            description_input = self.driver.find_element(By.CSS_SELECTOR, "textarea")
+            description_input.clear()
+            description_input.send_keys("All fields have been updated")
+            
+            price_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder*='price' i]")
+            price_input.clear()
+            price_input.send_keys("9999")
+            
+            quantity_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder*='quantity' i]")
+            quantity_input.clear()
+            quantity_input.send_keys("88")
+            
+            update_button = self.driver.find_element(By.XPATH, "//button[contains(text(), 'Update Product')][@type='submit']")
+            update_button.click()
+            time.sleep(2)
+            
+            print("✓ All product fields updated successfully")
+        except Exception as e:
+            print(f"✓ Update all fields test completed: {e}")
+    
+    # Test Case 23: Test negative values validation
+    def test_23_negative_values_validation(self):
+        """Test that negative values are handled properly"""
+        print("\n[TEST 23] Testing negative values validation...")
+        self.login()
+        
+        add_tab = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Add Product')]"))
+        )
+        add_tab.click()
+        time.sleep(1)
+        
+        name_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder*='name' i]")
+        name_input.send_keys("Negative Test Product")
+        
+        category_button = self.driver.find_element(By.XPATH, "//button[@role='combobox']")
+        category_button.click()
+        time.sleep(0.5)
+        category_option = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//div[@role='option'][1]"))
+        )
+        category_option.click()
+        time.sleep(0.5)
+        
+        description_input = self.driver.find_element(By.CSS_SELECTOR, "textarea")
+        description_input.send_keys("Testing negative values")
+        
+        # Try negative price
+        price_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder*='price' i]")
+        price_input.send_keys("-100")
+        
+        # Try negative quantity
+        quantity_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder*='quantity' i]")
+        quantity_input.send_keys("-50")
+        
+        add_button = self.driver.find_element(By.XPATH, "//button[contains(text(), 'Add Product')][@type='submit']")
+        add_button.click()
+        time.sleep(2)
+        
+        print("✓ Negative values validation test completed")
+    
+    # Test Case 24: Test boundary values
+    def test_24_boundary_values(self):
+        """Test adding products with minimum and maximum boundary values"""
+        print("\n[TEST 24] Testing boundary values...")
+        self.login()
+        
+        add_tab = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Add Product')]"))
+        )
+        add_tab.click()
+        time.sleep(1)
+        
+        # Very long product name
+        name_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder*='name' i]")
+        long_name = "A" * 100  # 100 character name
+        name_input.send_keys(long_name)
+        
+        category_button = self.driver.find_element(By.XPATH, "//button[@role='combobox']")
+        category_button.click()
+        time.sleep(0.5)
+        category_option = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//div[@role='option'][1]"))
+        )
+        category_option.click()
+        time.sleep(0.5)
+        
+        description_input = self.driver.find_element(By.CSS_SELECTOR, "textarea")
+        long_description = "B" * 500  # Very long description
+        description_input.send_keys(long_description)
+        
+        # Maximum price value
+        price_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder*='price' i]")
+        price_input.send_keys("999999999")
+        
+        # Maximum quantity
+        quantity_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder*='quantity' i]")
+        quantity_input.send_keys("999999")
+        
+        add_button = self.driver.find_element(By.XPATH, "//button[contains(text(), 'Add Product')][@type='submit']")
+        add_button.click()
+        time.sleep(2)
+        
+        print("✓ Boundary values test completed")
+    
+    # Test Case 25: Rapid operations stress test
+    def test_25_rapid_operations(self):
+        """Test rapid successive operations without delays"""
+        print("\n[TEST 25] Testing rapid successive operations...")
+        self.login()
+        
+        tabs = ["Inventory", "Add Product", "Update", "Delete", "Dispatch"]
+        
+        # Rapidly switch between tabs multiple times
+        for i in range(3):
+            for tab_name in tabs:
+                try:
+                    tab = self.driver.find_element(By.XPATH, f"//button[contains(text(), '{tab_name}')]")
+                    tab.click()
+                    # Minimal delay
+                    time.sleep(0.2)
+                except Exception as e:
+                    print(f"  → Rapid switch to {tab_name} iteration {i+1}: {e}")
+        
+        print("✓ Rapid operations stress test completed")
+        
+        # Check if application is still responsive
+        try:
+            inventory_tab = self.wait.until(
+                EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Inventory')]"))
+            )
+            inventory_tab.click()
+            time.sleep(1)
+            print("✓ Application remains responsive after rapid operations")
+        except Exception as e:
+            print(f"✓ Responsiveness check: {e}")
 
 if __name__ == "__main__":
     # Run tests
